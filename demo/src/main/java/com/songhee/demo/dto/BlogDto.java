@@ -1,8 +1,9 @@
 package com.songhee.demo.dto;
 
+import com.songhee.demo.common.code.DefaultValues;
 import com.songhee.demo.common.code.UseYn;
+import com.songhee.demo.common.utils.DateTimeUtil;
 import com.songhee.demo.domain.Blog;
-import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class BlogDto extends BaseTimeDto {
+public class BlogDto {
 
   private Integer idBlog;
   private String title;
@@ -19,8 +20,8 @@ public class BlogDto extends BaseTimeDto {
   private String blogName;
   private String thumbnail;
   private UseYn useYn;
-  private Timestamp regDateTime;
-  private Timestamp modDateTime;
+  private String regDateTime;
+  private String modDateTime;
 
   public BlogDto(Blog blog) {
     this.idBlog = blog.getIdBlog();
@@ -30,8 +31,8 @@ public class BlogDto extends BaseTimeDto {
     this.thumbnail = blog.getThumbnail();
     this.useYn = blog.getUseYn();
     this.blogName = blog.getBlogName();
-    this.regDateTime = blog.getRegDateTime();
-    this.modDateTime = blog.getModDateTime();
+    this.regDateTime = DateTimeUtil.convert_ISO_8601(blog.getRegDateTime(), DefaultValues.TIME_ZONE_ASIA_SEOUL);
+    this.modDateTime = DateTimeUtil.convert_ISO_8601(blog.getModDateTime(), DefaultValues.TIME_ZONE_ASIA_SEOUL);
   }
 
   public Blog toEntity() {
@@ -42,8 +43,8 @@ public class BlogDto extends BaseTimeDto {
         .url(url)
         .blogName(blogName)
         .thumbnail(thumbnail)
-        .regDateTime(regDateTime)
-        .modDateTime(modDateTime)
+        .regDateTime(DateTimeUtil.convert_date(this.getRegDateTime()))
+        .modDateTime(DateTimeUtil.convert_date(this.getModDateTime()))
         .useYn(useYn)
         .build();
   }

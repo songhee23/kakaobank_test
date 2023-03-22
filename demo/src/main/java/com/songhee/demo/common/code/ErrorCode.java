@@ -17,7 +17,8 @@ public enum ErrorCode {
 	HANDLE_ACCESS_DENIED(HttpStatus.SERVICE_UNAVAILABLE.value(), "EC0006", "Access is Denied", ""),
 
 	// Business
-	NO_SEARCHED_BLOG(HttpStatus.BAD_REQUEST.value(), "EB0001", "검색된 블로그가 없습니다.", "");
+	NO_SEARCHED_BLOG(HttpStatus.BAD_REQUEST.value(), "EB0001", "검색된 블로그가 없습니다.", ""),
+	NO_CONVERT_TO_TIMESTAMP(HttpStatus.BAD_REQUEST.value(), "EB0002", "파싱할 수 없는 날짜 입니다.", "");
 
 	private final String code;
 	private final String message;
