@@ -6,7 +6,6 @@ import com.songhee.demo.common.error.exception.BusinessException;
 import com.songhee.demo.domain.Blog;
 import com.songhee.demo.dto.BlogDto;
 import com.songhee.demo.repository.BlogRepository;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +35,7 @@ public class BlogService {
     if (blogs.getTotalPages() == 0) {
       throw new BusinessException(ErrorCode.NO_SEARCHED_BLOG);
     }
+
     return blogs.map(BlogDto::new);
   }
 }

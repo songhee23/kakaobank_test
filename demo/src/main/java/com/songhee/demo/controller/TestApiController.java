@@ -3,10 +3,13 @@ package com.songhee.demo.controller;
 import com.songhee.demo.common.code.SortCode;
 import com.songhee.demo.common.wrapper.Result;
 import com.songhee.demo.dto.BlogDto;
+import com.songhee.demo.dto.SearchHistoryDto;
 import com.songhee.demo.service.BlogService;
+import com.songhee.demo.service.SearchHistoryService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,9 @@ public class TestApiController {
 
 	@Autowired
 	BlogService blogService;
+
+	@Autowired
+	SearchHistoryService searchHistoryService;
 
 	@GetMapping("/search/blog")
 	@Operation(summary = "블로그 검색하기", description = "블로그 검색하기")
@@ -39,9 +45,19 @@ public class TestApiController {
 
 		SortCode sortCode = SortCode.find(sort);
 		Page<BlogDto> blogDtos = blogService.searchManager(sortCode, query, size, page);
+		searchHistoryService.insertSearchHistory(query);
 		return Result.<Page<BlogDto>>builder()
 			.result(blogDtos)
 			.build();
+	}
+
+	@GetMapping("/search/last-10")
+	@Operation(summary = "최근 블로그 검색어 10개 조회", description = "최근 블로그 검색어 10개 조회")
+	public Result<List<SearchHistoryDto>> searchLast10() {
+		List<SearchHistoryDto> searchHistoryDtos = searchHistoryService.getTop10SearchHistories();
+				return Result.<List<SearchHistoryDto>>builder()
+				.result(searchHistoryDtos)
+				.build();
 	}
 
 }
