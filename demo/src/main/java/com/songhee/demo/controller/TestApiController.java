@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,12 +21,19 @@ public class TestApiController {
 	@Autowired
 	TestService testService;
 
-	@PostMapping("/search")
-	@Operation(summary = "검색", description = "검색")
+	@GetMapping("/search/blog")
+	@Operation(summary = "블로그 검색하기", description = "블로그 검색하기")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "searchWord", value = "검색어", required = true),
+		@ApiImplicitParam(name = "query", value = "검색을 원하는 질의어 - 특정 블로그 글만 검색하고 싶은 경우, 블로그 url과 검색어를 공백(' ') 구분자로 넣을 수 있음", required = true),
+		@ApiImplicitParam(name = "sort", value = "결과 문서 정렬 방식, accuracy(정확도순) 또는 latest(발간일순), 기본값 accuracy\t", required = false),
+		@ApiImplicitParam(name = "page", value = "결과 페이지 번호, 1~50 사이의 값, 기본 값 1", required = false),
+		@ApiImplicitParam(name = "size", value = "한 페이지에 보여질 문서 수, 1~50 사이의 값, 기본 값 10", required = false),
 	})
-	public Result<Object> sumPoint(@RequestParam("searchWord") Integer searchWord) {
+	public Result<Object> searchBlog(
+			@RequestParam("query") String query,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 		return Result.<Object>builder()
 			.result(null)
 			.build();
