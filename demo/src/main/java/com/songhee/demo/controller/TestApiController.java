@@ -34,7 +34,7 @@ public class TestApiController {
 	public Result<Page<BlogDto>> searchBlog(
 			@RequestParam("query") String query,
 			@RequestParam(value = "sort", required = false, defaultValue = "accuracy") String sort,
-			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 
 		SortCode sortCode = SortCode.find(sort);
@@ -45,3 +45,7 @@ public class TestApiController {
 	}
 
 }
+
+
+
+
