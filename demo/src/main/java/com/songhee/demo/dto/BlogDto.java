@@ -1,10 +1,10 @@
 package com.songhee.demo.dto;
 
+import com.songhee.demo.common.code.UseYn;
 import com.songhee.demo.domain.Blog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +17,7 @@ public class BlogDto extends BaseTimeDto {
   private String url;
   private String blogName;
   private String thumbnail;
+  private UseYn useYn;
 
   public BlogDto(Blog blog) {
     this.idBlog = blog.getIdBlog();
@@ -24,6 +25,7 @@ public class BlogDto extends BaseTimeDto {
     this.contents = blog.getContents();
     this.url = blog.getUrl();
     this.thumbnail = blog.getThumbnail();
+    this.useYn = blog.getUseYn();
   }
 
   public Blog toEntity() {
@@ -34,6 +36,7 @@ public class BlogDto extends BaseTimeDto {
         .url(url)
         .blogName(blogName)
         .thumbnail(thumbnail)
+        .useYn(useYn)
         .build();
   }
 }

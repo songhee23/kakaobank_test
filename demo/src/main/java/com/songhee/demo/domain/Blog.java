@@ -1,6 +1,9 @@
 package com.songhee.demo.domain;
 
+import com.songhee.demo.common.code.UseYn;
+import com.songhee.demo.common.code.converter.UseYnConverter;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,4 +47,8 @@ public class Blog extends BaseTimeEntity {
   @Column(name = "thumbnail", length = 2000)
   private String thumbnail;
 
+  // 블로그 사용 여부
+  @Column(name = "useYn", length = 1)
+  @Convert(converter = UseYnConverter.class)
+  private UseYn useYn;
 }

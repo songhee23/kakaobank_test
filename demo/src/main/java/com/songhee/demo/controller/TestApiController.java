@@ -1,14 +1,16 @@
 package com.songhee.demo.controller;
 
+import com.songhee.demo.common.code.SortCode;
 import com.songhee.demo.common.wrapper.Result;
-import com.songhee.demo.service.TestService;
+import com.songhee.demo.dto.BlogDto;
+import com.songhee.demo.service.BlogService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestApiController {
 
 	@Autowired
-	TestService testService;
+	BlogService blogService;
 
 	@GetMapping("/search/blog")
 	@Operation(summary = "블로그 검색하기", description = "블로그 검색하기")
@@ -29,13 +31,17 @@ public class TestApiController {
 		@ApiImplicitParam(name = "page", value = "결과 페이지 번호, 1~50 사이의 값, 기본 값 1", required = false),
 		@ApiImplicitParam(name = "size", value = "한 페이지에 보여질 문서 수, 1~50 사이의 값, 기본 값 10", required = false),
 	})
-	public Result<Object> searchBlog(
+	public Result<Page<BlogDto>> searchBlog(
 			@RequestParam("query") String query,
-			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "sort", required = false, defaultValue = "accuracy") String sort,
 			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
 			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
-		return Result.<Object>builder()
-			.result(null)
+
+		SortCode sortCode = SortCode.find(sort);
+		Page<BlogDto> blogDtos = blogService.searchManager(sortCode, query, size, page);
+		return Result.<Page<BlogDto>>builder()
+			.result(blogDtos)
 			.build();
 	}
+
 }

@@ -14,9 +14,10 @@ public enum ErrorCode {
 	ENTITY_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "EC0003", "Entity Not Found", ""),
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "EC0004", "Server Error", ""),
 	INVALID_TYPE_VALUE(HttpStatus.BAD_REQUEST.value(), "EC0005", "Invalid Type Value", ""),
-	HANDLE_ACCESS_DENIED(HttpStatus.SERVICE_UNAVAILABLE.value(), "EC0006", "Access is Denied", "");
+	HANDLE_ACCESS_DENIED(HttpStatus.SERVICE_UNAVAILABLE.value(), "EC0006", "Access is Denied", ""),
 
 	// Business
+	NO_SEARCHED_BLOG(HttpStatus.BAD_REQUEST.value(), "EB0001", "검색된 블로그가 없습니다.", "");
 
 	private final String code;
 	private final String message;
