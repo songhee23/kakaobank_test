@@ -49,9 +49,21 @@
     );
 
     CREATE TABLE SEARCH_HISTORY(
-         ID_SEARCH_HISTORY INT AUTO_INCREMENT PRIMARY KEY ,
-         QUERY VARCHAR(3000) NOT NULL,
-         REG_DATE_TIME TIMESTAMP NOT NULL,
-         PRIMARY KEY (ID_SEARCH_HISTORY)
+     ID_SEARCH_HISTORY INT AUTO_INCREMENT PRIMARY KEY ,
+     QUERY VARCHAR(3000) NOT NULL,
+     REG_DATE_TIME TIMESTAMP NOT NULL,
+     PRIMARY KEY (ID_SEARCH_HISTORY)
     );
     ```
+    
+
+- API Test
+  ```
+  curl -i -X GET \
+ 'http://localhost:8080/v1/test/search/blog?query=5'
+ 
+ 
+ curl -i -X GET \
+ 'http://localhost:8080/v1/test/search/last-10'
+  
+  ```
