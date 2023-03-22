@@ -59,11 +59,9 @@
 
 - API Test
   ```
-  curl -i -X GET \
- 'http://localhost:8080/v1/test/search/blog?query=5'
+  curl -i -X GET 'http://localhost:8080/v1/test/search/blog?query=5'
  
  
- curl -i -X GET \
- 'http://localhost:8080/v1/test/search/last-10'
+  curl -i -X GET 'http://localhost:8080/v1/test/search/last-10'
   
   ```
